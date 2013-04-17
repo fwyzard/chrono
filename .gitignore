@@ -14,3 +14,6 @@
 
 # Automatic dependencies
 *.d
+
+# Binaries
+chrono
