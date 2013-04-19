@@ -64,5 +64,5 @@ It can store a time interval with nanosecond resolution up to ~16 ms.
 A double precision floating point number can represent all integers up to 2^53, or 9,007,199,254,740,992 (~9e15). 
 It can store a time interval with nanosecond resolution up to 9,000,000 seconds - slightly more than 100 days.
 
-A signed  long integer can represent all integers up to 9,223,372,036,854,775,808 (~9e18).
+A signed long integer can represent all integers up to 2^63-1, or 9,223,372,036,854,775,807 (~9e18).
 It can store a time interval with nanosecond resolution up to 9,000,000,000 seconds - alsmot 300 years.
