@@ -1,8 +1,8 @@
 #! /usr/bin/make -f
 
 # configuration for GCC
-CC  := gcc-4.8
-CXX := g++-4.8
+CC  := gcc
+CXX := g++
 
 # configuration for Boost
 WITH_BOOST := 1
