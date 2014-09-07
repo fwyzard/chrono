@@ -17,10 +17,12 @@ TBB_LIBDIR :=
 ARCH=$(shell uname -m)
 OS=$(shell uname -s)
 
-LIB_SRC=mach_absolute_time.cc mach_clock_get_time.cc posix_clock_gettime.cc tbb_tick_count.cc x86_tsc.cc x86_tsc_tick.cc x86_tsc_clock.cc native/x86_tsc_clock.cc
+INCLUDE=.
+
+LIB_SRC=src/mach_absolute_time.cc src/mach_clock_get_time.cc src/posix_clock_gettime.cc src/tbb_tick_count.cc src/x86_tsc.cc src/x86_tsc_tick.cc src/x86_tsc_clock.cc src/native/x86_tsc_clock.cc
 LIB_OBJ=$(LIB_SRC:%.cc=%.o)
 
-BIN_SRC=chrono.cc
+BIN_SRC=test/chrono.cc
 BIN_OBJ=$(BIN_SRC:%.cc=%.o)
 BIN=$(BIN_SRC:%.cc=%)
 
@@ -29,7 +31,7 @@ OBJ=$(SRC:%.cc=%.o)
 DEP=$(SRC:%.cc=%.d)
 
 # default compiler and linker flags
-CXXFLAGS := -std=c++11 -O3 -flto -g -Wall -MMD -fopenmp
+CXXFLAGS := -std=c++11 -O3 -flto -g -Wall -MMD -fopenmp -I${INCLUDE}
 LDFLAGS  := 
 
 # link with Boost, if available
@@ -67,10 +69,10 @@ all: $(BIN)
 
 
 clean:
-	rm -f *.o *.d *.asm
+	rm -f src/*.o src/*.d src/*.asm src/native/*.o src/native/*.d src/native/*.asm test/*.o test/*.d test/*.asm
 
-distclean:
-	rm -f *.o *.d *.asm $(BIN)
+distclean: clean
+	rm -f $(BIN)
 
 dump: $(OBJ:%.o=%.asm)
 

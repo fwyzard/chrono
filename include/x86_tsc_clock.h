@@ -9,10 +9,10 @@
 
 // for rdtscp, rdtscp, lfence, mfence
 #include <x86intrin.h>
-#include "x86_tsc.h"
 
 // for tsc_tick, etc.
-#include "x86_tsc_tick.h"
+#include "include/x86_tsc.h"
+#include "include/x86_tsc_tick.h"
 
 // TSC-based clock, using rdtsc (non-serialising)
 struct clock_rdtsc

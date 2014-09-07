@@ -11,10 +11,10 @@
 #include <mach/mach_time.h>
 #define HAVE_MACH_ABSOLUTE_TIME
 
-#include "../mach_absolute_time_tick.h"
+#include "include/mach_absolute_time_tick.h"
 
 // for native_duration, etc.
-#include "native.h"
+#include "include/native/native.h"
 
 namespace native {
 

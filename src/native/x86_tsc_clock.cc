@@ -1,8 +1,8 @@
 #if defined __x86_64__ or defined __i386__
 // TSC is only available on x86
 
-#include "../x86_tsc.h"
-#include "x86_tsc_clock.h"
+#include "include/x86_tsc.h"
+#include "include/native/x86_tsc_clock.h"
 
 namespace native {
 
