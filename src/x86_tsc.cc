@@ -63,7 +63,6 @@ bool has_invariant_tsc() {
     return false;
 }
 
-
 // Check if the RDTSC and RDTSCP instructions are allowed in user space.
 // This is controlled by the x86 control register 4, bit 4 (CR4.TSD), but that is only readable by the kernel.
 // On Linux, the flag can be read (and possibly set) via the prctl interface.
@@ -144,11 +143,44 @@ uint64_t serialising_rdtsc_mfence(void)
     return rdtsc();
 }
 
+// very old processors do not have a TSC
+uint64_t serialising_rdtsc_unimplemented(void)
+{
+    return 0;
+}
+
+
+namespace {
+
+  static inline
+  unsigned int _(const char b[4]) {
+    return * reinterpret_cast<const unsigned int *>(b);
+  }
+
+} // namespace
+
 extern "C" {
 
   static uint64_t (*serialising_rdtsc_resolver(void))(void)
   {
-    return serialising_rdtscp;
+    if (has_rdtscp())
+      // if available, use the RDTSCP instruction
+      return serialising_rdtscp;
+    else if (has_tsc()) {
+      // if the TSC is available, chck the processor vendor
+      unsigned int eax, ebx, ecx, edx;
+      __get_cpuid(0x00, & eax, & ebx, & ecx, & edx);
+      if (ebx == _("Genu") and edx == _("ineI") and ecx == _("ntel"))
+        // for Intel processors, LFENCE can be used as a serialising instruction before RDTSC
+        return serialising_rdtsc_lfence;
+      else if (ebx == _("Auth") and edx == _("enti") and ecx == _("cAMD"))
+        // for AMD processors, MFENCE can be used as a serialising instruction before RDTSC
+        return serialising_rdtsc_mfence;
+      else
+        // for other processors, assume that MFENCE can be used as a serialising instruction before RDTSC
+        return serialising_rdtsc_mfence;
+    } else
+      return serialising_rdtsc_unimplemented;
   }
 
 }
