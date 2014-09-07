@@ -19,22 +19,22 @@
 #endif // __linux__
 
 // other clocks
-#include "include/posix_clock.h"
-#include "include/posix_clock_gettime.h"
-#include "include/posix_gettimeofday.h"
-#include "include/posix_times.h"
-#include "include/posix_times_f.h"
-#include "include/posix_times_d.h"
-#include "include/posix_getrusage.h"
-#include "include/mach_clock_get_time.h"
-#include "include/mach_absolute_time.h"
-#include "include/x86_tsc_clock.h"
-#include "include/boost_timer.h"
-#include "include/tbb_tick_count.h"
-#include "include/omp_get_wtime.h"
+#include "interface/posix_clock.h"
+#include "interface/posix_clock_gettime.h"
+#include "interface/posix_gettimeofday.h"
+#include "interface/posix_times.h"
+#include "interface/posix_times_f.h"
+#include "interface/posix_times_d.h"
+#include "interface/posix_getrusage.h"
+#include "interface/mach_clock_get_time.h"
+#include "interface/mach_absolute_time.h"
+#include "interface/x86_tsc_clock.h"
+#include "interface/boost_timer.h"
+#include "interface/tbb_tick_count.h"
+#include "interface/omp_get_wtime.h"
 
-#include "include/native/mach_absolute_time.h"
-#include "include/native/x86_tsc_clock.h"
+#include "interface/native/mach_absolute_time.h"
+#include "interface/native/x86_tsc_clock.h"
 
 #include "benchmark.h"
 

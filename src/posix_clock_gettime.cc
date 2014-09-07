@@ -1,4 +1,4 @@
-#include "include/posix_clock_gettime.h"
+#include "interface/posix_clock_gettime.h"
 
 #include <unistd.h>
 
