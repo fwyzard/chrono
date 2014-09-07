@@ -19,7 +19,7 @@ OS=$(shell uname -s)
 
 INCLUDE=.
 
-LIB_SRC=src/mach_absolute_time.cc src/mach_clock_get_time.cc src/posix_clock_gettime.cc src/tbb_tick_count.cc src/x86_tsc.cc src/x86_tsc_tick.cc src/x86_tsc_clock.cc src/native/x86_tsc_clock.cc
+LIB_SRC=$(wildcard src/*.cc src/native/*.cc)
 LIB_OBJ=$(LIB_SRC:%.cc=%.o)
 
 BIN_SRC=test/chrono.cc
