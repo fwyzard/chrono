@@ -17,7 +17,7 @@ TBB_LIBDIR :=
 ARCH=$(shell uname -m)
 OS=$(shell uname -s)
 
-LIB_SRC=mach_absolute_time.cc mach_clock_get_time.cc posix_clock_gettime.cc tbb_tick_count.cc x86_tsc.cc x86_tsc_tick.cc x86_tsc_clock.cc
+LIB_SRC=mach_absolute_time.cc mach_clock_get_time.cc posix_clock_gettime.cc tbb_tick_count.cc x86_tsc.cc x86_tsc_tick.cc x86_tsc_clock.cc native/x86_tsc_clock.cc
 LIB_OBJ=$(LIB_SRC:%.cc=%.o)
 
 BIN_SRC=chrono.cc

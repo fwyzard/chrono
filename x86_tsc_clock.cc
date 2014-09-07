@@ -16,16 +16,4 @@ const bool clock_rdtsc_mfence::is_steady            = has_invariant_tsc();
 const bool clock_rdtscp::is_available               = has_rdtscp() and tsc_allowed();
 const bool clock_rdtscp::is_steady                  = has_invariant_tsc();
 
-const bool clock_rdtsc_native::is_available         = has_tsc() and tsc_allowed();
-const bool clock_rdtsc_native::is_steady            = has_invariant_tsc();
-
-const bool clock_rdtsc_lfence_native::is_available  = has_tsc() and tsc_allowed();
-const bool clock_rdtsc_lfence_native::is_steady     = has_invariant_tsc();
-
-const bool clock_rdtsc_mfence_native::is_available  = has_tsc() and tsc_allowed();
-const bool clock_rdtsc_mfence_native::is_steady     = has_invariant_tsc();
-
-const bool clock_rdtscp_native::is_available        = has_rdtscp() and tsc_allowed();
-const bool clock_rdtscp_native::is_steady           = has_invariant_tsc();
-
 #endif // defined __x86_64__ or defined __i386__
