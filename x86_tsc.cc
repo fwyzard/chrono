@@ -122,4 +122,38 @@ double calibrate_tsc_hz() {
   return sigma_xy / sigma_xx;
 }
 
+
+// new processors can use rdtscp;
+uint64_t serialising_rdtscp(void)
+{
+    unsigned int id;
+    return rdtscp(& id);
+}
+
+// older Intel processors can use lfence; rdtsc;
+uint64_t serialising_rdtsc_lfence(void)
+{
+    _mm_lfence();
+    return rdtsc();
+}
+
+// older AMD processors can use mfence; rdtsc;
+uint64_t serialising_rdtsc_mfence(void)
+{
+    _mm_mfence();
+    return rdtsc();
+}
+
+extern "C" {
+
+  static uint64_t (*serialising_rdtsc_resolver(void))(void)
+  {
+    return serialising_rdtscp;
+  }
+
+}
+
+extern uint64_t serialising_rdtsc(void) __attribute__((ifunc("serialising_rdtsc_resolver")));
+
+
 #endif // defined __x86_64__ or defined __i386__

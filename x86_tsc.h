@@ -51,6 +51,11 @@ bool tsc_allowed();
 
 double calibrate_tsc_hz();
 
+
+// processor specific serialising access to the TSC
+extern uint64_t serialising_rdtsc(void);
+
+
 #endif // x86_tsc_h
 
 #endif // defined __x86_64__ or defined __i386__
