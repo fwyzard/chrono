@@ -128,6 +128,8 @@ void init_timers(std::vector<BenchmarkBase *> & timers)
     timers.push_back(new Benchmark<clock_rdtsc_mfence>("MFENCE; RDTSC (" + tsc_freq + ") (using nanoseconds)"));
   if (clock_rdtscp::is_available)
     timers.push_back(new Benchmark<clock_rdtscp>("RDTSCP (" + tsc_freq + ") (using nanoseconds)"));
+  if (clock_serialising_rdtsc::is_available)
+    timers.push_back(new Benchmark<clock_serialising_rdtsc>("run-time selected serialising RDTSC (" + tsc_freq + ") (using nanoseconds)"));
   // x86 DST-based clock (native)
   if (clock_rdtsc::is_available)
     timers.push_back(new Benchmark<native::clock_rdtsc>("RDTSC (" + tsc_freq + ") (native)"));

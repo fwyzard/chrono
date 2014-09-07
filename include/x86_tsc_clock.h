@@ -104,6 +104,28 @@ struct clock_rdtscp
 };
 
 
+// TSC-based clock, determining at run-time the best strategy to serialise the reads from the TSC
+struct clock_serialising_rdtsc
+{
+  // std::chrono interface
+  typedef std::chrono::nanoseconds                                      duration;
+  typedef duration::rep                                                 rep;
+  typedef duration::period                                              period;
+  typedef std::chrono::time_point<clock_rdtscp, duration>               time_point;
+
+  static const bool is_steady;
+  static const bool is_available;
+
+  static time_point now() noexcept
+  {
+    int64_t    ticks = serialising_rdtsc();
+    rep        ns    = tsc_tick::to_nanoseconds(ticks);
+    time_point time  = time_point(duration(ns));
+    return time;
+  }
+};
+
+
 #endif // x86_tsc_clock_h
 
 #endif // defined __x86_64__ or defined __i386__
