@@ -153,7 +153,7 @@ extern "C" {
 
 }
 
-extern uint64_t serialising_rdtsc(void) __attribute__((ifunc("serialising_rdtsc_resolver")));
+extern uint64_t serialising_rdtsc(void) __attribute__((ifunc("serialising_rdtsc_resolver"))) __attribute__((externally_visible));
 
 
 #endif // defined __x86_64__ or defined __i386__
