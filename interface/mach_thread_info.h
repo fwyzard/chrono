@@ -24,17 +24,20 @@ struct mach_thread_info_clock
 
   static time_point now() noexcept
   {
+    thread_local mach_port_t thread_id = mach_thread_self();
+
     thread_basic_info_data_t basic_info;
     mach_msg_type_number_t count = THREAD_BASIC_INFO_COUNT;
-    if (KERN_SUCCESS == thread_info(mach_thread_self(), THREAD_BASIC_INFO, static_cast<thread_info_t>(& basic_info), & count)) {
+    if (KERN_SUCCESS == thread_info(thread_id, THREAD_BASIC_INFO, (thread_info_t) & basic_info, & count)) {
       return time_point( std::chrono::seconds(basic_info.user_time.seconds + basic_info.system_time.seconds) +
                          std::chrono::microseconds(basic_info.user_time.microseconds + basic_info.system_time.microseconds) );
     } else {
-      return time_point;
+      return time_point();
     }
   }
 
 };
+
 #endif // mach_thread_info_h
 
 #endif // defined(__APPLE__) || defined(__MACH__)
