@@ -1,15 +1,15 @@
+#if defined(__APPLE__) || defined(__MACH__)
+
 #ifndef mach_thread_info_h
 #define mach_thread_info_h
 
-#if defined(__APPLE__) || defined(__MACH__)
-#define HAVE_MACH_THREAD_INFO_CLOCK
+// C++ standard headers
+#include <chrono>
 
 // Darwin system headers
 #include <mach/kern_return.h>
 #include <mach/thread_info.h>
-
-// C++ standard headers
-#include <chrono>
+#define HAVE_MACH_THREAD_INFO_CLOCK
 
 // based on thread_info(mach_thread_self(), THREAD_BASIC_INFO, ...)
 struct mach_thread_info_clock
@@ -36,3 +36,5 @@ struct mach_thread_info_clock
 
 };
 #endif // mach_thread_info_h
+
+#endif // defined(__APPLE__) || defined(__MACH__)
