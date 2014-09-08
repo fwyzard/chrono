@@ -110,6 +110,10 @@ void init_timers(std::vector<BenchmarkBase *> & timers)
     timers.push_back(new Benchmark<native::mach_absolute_time_clock>("mach_absolute_time() (native)"));
   }
 #endif // HAVE_MACH_ABSOLUTE_TIME
+#ifdef HAVE_MACH_THREAD_INFO_CLOCK
+  if (mach_thread_info_clock::is_available)
+    timers.push_back(new Benchmark<mach_thread_info_clock>("thread_info(mach_thread_self(), THREAD_BASIC_INFO, ...)"));
+#endif // HAVE_MACH_THREAD_INFO_CLOCK
 
 #if defined __x86_64__ or defined __i386__
 // TSC is only available on x86
