@@ -122,6 +122,9 @@ double calibrate_tsc_hz() {
 }
 
 
+#if defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
+// IFUNC support requires GLIBC >= 2.11.1
+
 // new processors can use rdtscp;
 uint64_t serialising_rdtscp(void)
 {
@@ -152,7 +155,7 @@ uint64_t serialising_rdtsc_unimplemented(void)
 
 namespace {
 
-  static inline
+  static inline constexpr
   unsigned int _(const char b[4]) {
     return * reinterpret_cast<const unsigned int *>(b);
   }
@@ -186,6 +189,6 @@ extern "C" {
 }
 
 extern uint64_t serialising_rdtsc(void) __attribute__((ifunc("serialising_rdtsc_resolver"))) __attribute__((externally_visible));
-
+#endif // defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
 
 #endif // defined __x86_64__ or defined __i386__

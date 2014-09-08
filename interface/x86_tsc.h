@@ -52,8 +52,11 @@ bool tsc_allowed();
 double calibrate_tsc_hz();
 
 
+#if defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
+// IFUNC support requires GLIBC >= 2.11.1
 // processor specific serialising access to the TSC
 extern uint64_t serialising_rdtsc(void);
+#endif // defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
 
 
 #endif // x86_tsc_h

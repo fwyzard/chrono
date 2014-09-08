@@ -104,6 +104,8 @@ struct clock_rdtscp
 };
 
 
+#if defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
+// IFUNC support requires GLIBC >= 2.11.1
 // TSC-based clock, determining at run-time the best strategy to serialise the reads from the TSC
 struct clock_serialising_rdtsc
 {
@@ -124,6 +126,7 @@ struct clock_serialising_rdtsc
     return time;
   }
 };
+#endif // defined __GLIBC__ && (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 11)
 
 
 #endif // x86_tsc_clock_h
