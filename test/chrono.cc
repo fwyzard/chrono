@@ -28,6 +28,7 @@
 #include "interface/posix_getrusage.h"
 #include "interface/mach_clock_get_time.h"
 #include "interface/mach_absolute_time.h"
+#include "interface/mach_thread_info.h"
 #include "interface/x86_tsc_clock.h"
 #include "interface/boost_timer.h"
 #include "interface/tbb_tick_count.h"
