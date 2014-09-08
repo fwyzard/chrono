@@ -1,3 +1,6 @@
+#ifndef __clang__
+// CLANG does not support OpenMP
+
 #ifndef omp_get_wtime_h
 #define omp_get_wtime_h
 
@@ -26,3 +29,5 @@ struct clock_omp_get_wtime
 };
 
 #endif // omp_get_wtime_h
+
+#endif // ! __clang__
