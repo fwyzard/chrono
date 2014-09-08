@@ -11,7 +11,7 @@ Intel Time Stamp Counter
 Some details on the TSC found in Intel processors, related serialising instructions, 
 and benchmarks, can be found at [http://download.intel.com/embedded/software/IA/324264.pdf]
 
-The ratio of TSC clock to bus clock can be read from MSR_PLATFORM_INFO[15:8], see 
+The ratio of TSC clock to bus clock can be read from `MSR_PLATFORM_INFO[15:8]`, see 
 Intel 64 and IA-32 Architectures Software Developer’s Manual, Vol. 3C 35-53 (pag. 2852)
 
 
@@ -20,8 +20,9 @@ Notes on chrono::duration
 
 A duration has a representation and a tick period (precision).
 
+```
   template <typename Rep, typename Period> class duration;
-
+```
 
 The representation is simply any arithmetic type, or an emulation of such a type. 
 The representation stores a count of ticks. This count is the only data member stored in a 
@@ -33,20 +34,21 @@ not stored. The tick period only has an impact on the behavior of the duration w
 between different duration's is attempted. The tick period is completely ignored when simply 
 doing arithmetic on durations of the same type.
 
-Note that the tick period is defined at *compile time* as an std:ratio<>, so it cannot be used to 
-optimally represent clocks with period known only at runtime (e.g. x86 TSC, OSX mach_absolute_time, 
-Windows QueryPerformanceCounter).
+Note that the tick period is defined at *compile time* as an `std:ratio<>`, so it cannot be used to 
+optimally represent clocks with period known only at runtime (e.g. x86 TSC, OSX `mach_absolute_time`, 
+Windows `QueryPerformanceCounter`).
 
 
-Notes on native_duration
-========================
+Notes on `native_duration`
+==========================
 
-A native_duration has a representation and a tick period (precision).
+A `native_duration` has a representation and a tick period (precision).
 
+```
   template <class Rep, class Period> class native_duration;
+```
 
-
-As in an std::chrono::duration, the representation is simply any arithmetic type, or an emulation 
+As in an `std::chrono::duration`, the representation is simply any arithmetic type, or an emulation 
 of such a type, storing a count of ticks. This count is the only data member stored in a duration. 
 If the representation is floating point, it can store fractions of a tick to the precision of the 
 representation. 
@@ -69,7 +71,7 @@ A double precision floating point number can represent all integers up to 2^53, 
 It can store a time interval with nanosecond resolution up to 9,000,000 seconds - slightly more than 100 days.
 
 A signed long integer can represent all integers up to 2^63-1, or 9,223,372,036,854,775,807 (~9e18).
-It can store a time interval with nanosecond resolution up to 9,000,000,000 seconds - alsmot 300 years.
+It can store a time interval with nanosecond resolution up to 9,000,000,000 seconds - almost 300 years.
 
 
 Sample outputs
