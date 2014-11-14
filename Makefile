@@ -5,12 +5,12 @@ CC  := gcc
 CXX := g++
 
 # configuration for Boost
-WITH_BOOST := 1
+WITH_BOOST := 0
 BOOST_INCDIR :=
 BOOST_LIBDIR :=
 
 # configuration for TBB
-WITH_TBB := 1
+WITH_TBB := 0
 TBB_INCDIR :=
 TBB_LIBDIR :=
 
@@ -39,6 +39,7 @@ ifeq "$(WITH_BOOST)" "1"
   ifneq "$(BOOST_INCDIR)" ""
     CXXFLAGS := $(CXXFLAGS) -I"$(BOOST_INCDIR)"
   endif
+  CXXFLAGS := $(CXXFLAGS) -DHAVE_BOOST_TIMER
   ifneq "$(BOOST_LIBDIR)" ""
     LDFLAGS := $(LDFLAGS) -L"$(BOOST_LIBDIR)"
   endif
@@ -50,6 +51,7 @@ ifeq "$(WITH_TBB)" "1"
   ifneq "$(TBB_INCDIR)" ""
     CXXFLAGS := $(CXXFLAGS) -I"$(TBB_INCDIR)"
   endif
+  CXXFLAGS := $(CXXFLAGS) -DHAVE_TBB
   ifneq "$(TBB_LIBDIR)" ""
     LDFLAGS := $(LDFLAGS) -L"$(TBB_LIBDIR)"
   endif
