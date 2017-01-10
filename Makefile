@@ -39,11 +39,11 @@ ifeq "$(WITH_BOOST)" "1"
   ifneq "$(BOOST_INCDIR)" ""
     CXXFLAGS := $(CXXFLAGS) -I"$(BOOST_INCDIR)"
   endif
-  CXXFLAGS := $(CXXFLAGS) -DHAVE_BOOST_TIMER
+  CXXFLAGS := $(CXXFLAGS) -DHAVE_BOOST_TIMER -DHAVE_BOOST_CHRONO
   ifneq "$(BOOST_LIBDIR)" ""
     LDFLAGS := $(LDFLAGS) -L"$(BOOST_LIBDIR)"
   endif
-  LDFLAGS := $(LDFLAGS) -lboost_timer -lboost_system
+  LDFLAGS := $(LDFLAGS) -lboost_timer -lboost_chrono -lboost_system
 endif
 
 # link with TBB, if available

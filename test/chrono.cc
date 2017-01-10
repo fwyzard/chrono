@@ -13,6 +13,11 @@
 #include <stdexcept>
 #include <chrono>
 
+#ifdef HAVE_BOOST_CHRONO
+// boost headers
+#include <boost/chrono.hpp>
+#endif // HAVE_BOOST_CHRONO
+
 // for uname
 #include <sys/utsname.h>
 
@@ -171,10 +176,26 @@ void init_timers(std::vector<BenchmarkBase *> & timers)
 #endif // defined __x86_64__ or defined __i386__
 
 #ifdef HAVE_BOOST_TIMER
-  // boost timer clock
+  // boost timer clocks
   timers.push_back(new Benchmark<clock_boost_timer_realtime>("boost::timer (wall-clock time)"));
   timers.push_back(new Benchmark<clock_boost_timer_cputime>("boost::timer (cpu time)"));
 #endif // HAVE_BOOST_TIMER
+
+#ifdef HAVE_BOOST_CHRONO
+  // boost chrono clocks
+  timers.push_back(new Benchmark<boost::chrono::steady_clock>("boost::chrono::steady_clock"));
+  timers.push_back(new Benchmark<boost::chrono::system_clock>("boost::chrono::system_clock"));
+  timers.push_back(new Benchmark<boost::chrono::high_resolution_clock>("boost::chrono::high_resolution_clock"));
+  #ifdef BOOST_CHRONO_HAS_PROCESS_CLOCKS
+  timers.push_back(new Benchmark<boost::chrono::process_real_cpu_clock>("boost::chrono::process_real_cpu_clock"));
+  timers.push_back(new Benchmark<boost::chrono::process_user_cpu_clock>("boost::chrono::process_user_cpu_clock"));
+  timers.push_back(new Benchmark<boost::chrono::process_system_cpu_clock>("boost::chrono::process_system_cpu_clock"));
+  //timers.push_back(new Benchmark<boost::chrono::process_cpu_clock>("boost::chrono::process_cpu_clock"));
+  #endif // BOOST_CHRONO_HAS_PROCESS_CLOCKS
+  #ifdef BOOST_CHRONO_HAS_THREAD_CLOCK
+  timers.push_back(new Benchmark<boost::chrono::thread_clock>("boost::chrono::thread_clock"));
+  #endif // BOOST_CHRONO_HAS_THREAD_CLOCK
+#endif // HAVE_BOOST_CHRONO
 
 #ifdef HAVE_TBB
   // TBB tick_count (this interface does not expose the underlying type, so it cannot easily be used to build a "native" clock interface)
