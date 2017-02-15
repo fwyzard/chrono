@@ -18,6 +18,16 @@
 #include <boost/chrono.hpp>
 #endif // HAVE_BOOST_CHRONO
 
+#if defined HAVE_BOOST_CHRONO || defined HAVE_BOOST_TIMER
+// boost version
+#include <boost/version.hpp>
+#endif // defined HAVE_BOOST_CHRONO || defined HAVE_BOOST_TIMER
+
+#ifdef HAVE_TBB
+// TBB version
+#include <tbb/tbb_stddef.h>
+#endif // HAVE_TBB
+
 // for uname
 #include <sys/utsname.h>
 
@@ -248,8 +258,15 @@ int main(void) {
   std::cout << read_kernel_version() << std::endl;
 #ifdef __linux__
   std::cout << "glibc version: " << read_glibc_version() << std::endl;
-  std::cout << "clock source: " << read_clock_source() << std::endl;
+  std::cout << "clock source:  " << read_clock_source() << std::endl;
 #endif // __linux__
+#if defined HAVE_BOOST_CHRONO || defined HAVE_BOOST_TIMER
+  std::cout << "boost version: " << (BOOST_VERSION / 100000) << '.' << (BOOST_VERSION / 100 % 1000) << '.' << (BOOST_VERSION % 100) << std::endl;
+#endif // defined HAVE_BOOST_CHRONO || defined HAVE_BOOST_TIMER
+#ifdef HAVE_TBB
+  std::cout << "tbb version:   " << (TBB_INTERFACE_VERSION / 1000) << '.' << (TBB_INTERFACE_VERSION % 1000) << " (interface) " 
+            << (tbb::TBB_runtime_interface_version() / 1000) << '.' << (tbb::TBB_runtime_interface_version() % 1000) << " (runtime)" << std::endl;
+#endif // HAVE_TBB
 
   std::cout << "For each timer the resolution reported is the MINIMUM (MEDIAN) (MEAN +/- its STDDEV) of the increments measured during the test." << std::endl << std::endl; 
 
