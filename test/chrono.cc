@@ -37,6 +37,7 @@
 #endif // __linux__
 
 // other clocks
+#include "interface/syscall_clock_gettime.h"
 #include "interface/posix_clock.h"
 #include "interface/posix_clock_gettime.h"
 #include "interface/posix_gettimeofday.h"
@@ -74,6 +75,40 @@ void init_timers(std::vector<BenchmarkBase *> & timers)
 #endif
   timers.push_back(new Benchmark<std::chrono::system_clock>("std::chrono::system_clock"));
   timers.push_back(new Benchmark<std::chrono::high_resolution_clock>("std::chrono::high_resolution_clock"));
+
+  // syscall clock_gettime
+#ifdef HAVE_SYSCALL_CLOCK_REALTIME
+  if (clock_syscall_realtime::is_available)
+    timers.push_back(new Benchmark<clock_syscall_realtime>("syscall(SYS_clock_gettime, CLOCK_REALTIME)"));
+#endif // HAVE_SYSCALL_CLOCK_REALTIME
+#ifdef HAVE_SYSCALL_CLOCK_REALTIME_COARSE
+  if (clock_syscall_realtime_coarse::is_available)
+    timers.push_back(new Benchmark<clock_syscall_realtime_coarse>("syscall(SYS_clock_gettime, CLOCK_REALTIME_COARSE)"));
+#endif // HAVE_SYSCALL_CLOCK_REALTIME_COARSE
+#ifdef HAVE_SYSCALL_CLOCK_MONOTONIC
+  if (clock_syscall_monotonic::is_available)
+    timers.push_back(new Benchmark<clock_syscall_monotonic>("syscall(SYS_clock_gettime, CLOCK_MONOTONIC)"));
+#endif // HAVE_SYSCALL_CLOCK_MONOTONIC
+#ifdef HAVE_SYSCALL_CLOCK_MONOTONIC_COARSE
+  if (clock_syscall_monotonic_coarse::is_available)
+    timers.push_back(new Benchmark<clock_syscall_monotonic_coarse>("syscall(SYS_clock_gettime, CLOCK_MONOTONIC_COARSE)"));
+#endif // HAVE_SYSCALL_CLOCK_MONOTONIC_COARSE
+#ifdef HAVE_SYSCALL_CLOCK_MONOTONIC_RAW
+  if (clock_syscall_monotonic_raw::is_available)
+    timers.push_back(new Benchmark<clock_syscall_monotonic_raw>("syscall(SYS_clock_gettime, CLOCK_MONOTONIC_RAW)"));
+#endif // HAVE_SYSCALL_CLOCK_MONOTONIC_RAW
+#ifdef HAVE_SYSCALL_CLOCK_BOOTTIME
+  if (clock_syscall_boottime::is_available)
+    timers.push_back(new Benchmark<clock_syscall_boottime>("syscall(SYS_clock_gettime, CLOCK_BOOTTIME)"));
+#endif // HAVE_SYSCALL_CLOCK_BOOTTIME
+#ifdef HAVE_SYSCALL_CLOCK_PROCESS_CPUTIME_ID
+  if (clock_syscall_process_cputime::is_available)
+    timers.push_back(new Benchmark<clock_syscall_process_cputime>("syscall(SYS_clock_gettime, CLOCK_PROCESS_CPUTIME_ID)"));
+#endif // HAVE_SYSCALL_CLOCK_PROCESS_CPUTIME_ID
+#ifdef HAVE_SYSCALL_CLOCK_THREAD_CPUTIME_ID
+  if (clock_syscall_thread_cputime::is_available)
+    timers.push_back(new Benchmark<clock_syscall_thread_cputime>("syscall(SYS_clock_gettime, CLOCK_THREAD_CPUTIME_ID)"));
+#endif // HAVE_SYSCALL_CLOCK_THREAD_CPUTIME_ID
 
   // POSIX clock_gettime
 #ifdef HAVE_POSIX_CLOCK_REALTIME
