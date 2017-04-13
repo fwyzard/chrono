@@ -96,6 +96,10 @@ void init_timers(std::vector<BenchmarkBase *> & timers)
   if (clock_gettime_monotonic_raw::is_available)
     timers.push_back(new Benchmark<clock_gettime_monotonic_raw>("clock_gettime(CLOCK_MONOTONIC_RAW)"));
 #endif // HAVE_POSIX_CLOCK_MONOTONIC_RAW
+#ifdef HAVE_POSIX_CLOCK_BOOTTIME
+  if (clock_gettime_boottime::is_available)
+    timers.push_back(new Benchmark<clock_gettime_boottime>("clock_gettime(CLOCK_BOOTTIME)"));
+#endif // HAVE_POSIX_CLOCK_BOOTTIME
 #ifdef HAVE_POSIX_CLOCK_PROCESS_CPUTIME_ID
   if (clock_gettime_process_cputime::is_available)
     timers.push_back(new Benchmark<clock_gettime_process_cputime>("clock_gettime(CLOCK_PROCESS_CPUTIME_ID)"));
